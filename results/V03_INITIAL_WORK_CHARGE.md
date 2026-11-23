@@ -49,7 +49,7 @@ Values below are arithmetic means of the 16 paired parameter conditions within e
 
 1. **Against the same-initial-library faithful copier D**, L's average drifting late throughput is 1.4% higher, but cumulative fuel conversion is only 0.4% higher. Work and material investment are also slightly higher. This is a small conditional signal, not a demonstrated investment-adjusted advantage.
 2. **Against Mmatched under drift**, L has 6.6% lower cumulative fuel conversion, 4.9% higher declared work investment and equal reported material investment. Fuel conversion per declared work is about 10.9% lower.
-3. In static conditions, Mmatched exceeds L's cumulative fuel conversion by about 3.9% on average, while L's late throughput is lower by about 20.3%.
+3. In static conditions, Mmatched exceeds L's cumulative fuel conversion by about 3.9% on average, even though L's late throughput is about 25.5% higher. This divergence is why late throughput cannot substitute for cumulative output.
 4. Dmatched is a front-loaded, large standing-variation comparison with a different investment profile; it is not a clean equal-budget control.
 5. Moracle is post-hoc initialized with L's final composition. It is an informed benchmark, not a feasible uninformed strategy or a strict mathematical upper bound.
 
