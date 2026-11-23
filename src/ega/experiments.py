@@ -56,6 +56,14 @@ def run_suite(out: Path, seeds: int = 10, steps: int = 300) -> list[dict]:
                             "initial_population": result["initial_population"],
                             "late_sigma": result["mean_sigma_late"],
                             "late_throughput": result["mean_throughput_late"],
+                            "late_throughput_per_catalyst": (
+                                result["mean_throughput_late"] / result["mean_population_late"]
+                                if result["mean_population_late"] > 0 else 0.0
+                            ),
+                            "late_sigma_per_catalyst": (
+                                result["mean_sigma_late"] / result["mean_population_late"]
+                                if result["mean_population_late"] > 0 else 0.0
+                            ),
                             "cumulative_sigma": result["cumulative_sigma"],
                             "cumulative_fuel_spent": result["cumulative_fuel_spent"],
                             "fuel_balance_residual": result["fuel_balance_residual"],
@@ -77,7 +85,8 @@ def run_suite(out: Path, seeds: int = 10, steps: int = 300) -> list[dict]:
 
     metrics = ("late_sigma", "late_throughput", "cumulative_sigma",
                "cumulative_fuel_spent", "final_population", "mean_population_late",
-               "late_key_distance", "stored_energy_final")
+               "late_key_distance", "stored_energy_final",
+               "late_throughput_per_catalyst", "late_sigma_per_catalyst")
     by_key = {(r["design"], r["barrier_kT"], r["seed"], r["arm"]): r for r in records}
     summary: dict = {}
     contrasts: dict = {}
