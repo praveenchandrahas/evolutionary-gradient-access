@@ -19,6 +19,7 @@ The subject is **evolutionary advantage**, not a unique property of life.
 - **U:** ideal designer benchmark with target-matched catalysts.
 - **A:** bounded, oracle-assisted non-replicating adaptive search control.
 - **Mmatched:** fixed random catalyst library matched to L's late-window population size.
+- **Dmatched:** faithful-copying, no-new-mutation population initialized at L's late-window population size; it can reproduce and select among its larger standing library.
 - **Amatched:** adaptive-search control matched to L's late-window population size.
 - **Umatched:** ideal target-matched catalyst population at L's late-window population size.
 
@@ -36,7 +37,7 @@ pytest -q
 ega-run --out results/long-horizon-key16 --seeds 10 --steps 300 --duration 100
 ```
 
-The current runner executes E01 (static locks), E03 (slow, medium and fast drifting locks) and E04 (multiple locks), using 16-bit keys over 100 residence-time units. It includes matched-size Mmatched, Amatched and Umatched controls, with each fixed control matched to the paired L run's late-window population. A is an oracle-assisted adaptive-search control. Initial construction, reproduction, maintenance, mutation and search costs are recorded separately; cumulative dissipation is reported from the same trajectories.
+The current runner executes E01 (static locks), E03 (slow, medium and fast drifting locks) and E04 (multiple locks), using 16-bit keys over 100 residence-time units. It includes matched-size Mmatched, Dmatched, Amatched and Umatched controls, with each fixed control matched to the paired L run's late-window population. A is an oracle-assisted adaptive-search control. Initial construction, reproduction, maintenance, mutation and search costs are recorded separately; cumulative dissipation is reported from the same trajectories.
 
 ## Interpretation limits
 
