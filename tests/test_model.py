@@ -15,7 +15,6 @@ def test_zero_barrier_removes_catalytic_advantage():
 
 
 def test_matched_controls_use_requested_fixed_population():
-    cfg = Config(steps=10, duration=1.0, seed=5)
     cfg = Config(steps=10, duration=1.0, seed=5, max_catalysts=137)
     result = simulate("Mmatched", cfg, fixed_population_size=137)
     assert result["initial_population"] == 137
@@ -72,7 +71,7 @@ def test_d_and_l_share_initial_targets_and_seed():
 
 def test_entropy_is_not_used_in_reproductive_rule():
     source = inspect.getsource(simulate)
-    reproductive_section = source.split('if arm in ("D", "L")')[1].split('elif arm in ("A", "Amatched")')[0]
+    reproductive_section = source.split('if arm in ("D", "L", "Dmatched")')[1].split('elif arm in ("A", "Amatched")')[0]
     assert "sigma" not in reproductive_section.lower()
 
 
