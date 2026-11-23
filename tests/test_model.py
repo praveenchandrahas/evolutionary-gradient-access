@@ -10,15 +10,20 @@ def test_zero_barrier_removes_catalytic_advantage():
     values = [simulate(arm, cfg)["mean_throughput_late"]
               for arm in ("N", "M", "D", "L", "U", "A")]
     values.extend(simulate(arm, cfg, fixed_population_size=100)["mean_throughput_late"]
-                  for arm in ("Mmatched", "Amatched", "Umatched"))
+                  for arm in ("Mmatched", "Dmatched", "Amatched", "Umatched"))
     assert max(values) - min(values) < 1e-10
 
 
 def test_matched_controls_use_requested_fixed_population():
     cfg = Config(steps=10, duration=1.0, seed=5)
+    cfg = Config(steps=10, duration=1.0, seed=5, max_catalysts=137)
     result = simulate("Mmatched", cfg, fixed_population_size=137)
     assert result["initial_population"] == 137
     assert result["final_population"] == 137
+    dmatched = simulate("Dmatched", cfg, fixed_population_size=137)
+    assert dmatched["initial_population"] == 137
+    assert dmatched["final_population"] == 137
+    assert simulate("N", cfg)["extinct_at"] is None
     with pytest.raises(ValueError):
         simulate("Mmatched", cfg)
 
