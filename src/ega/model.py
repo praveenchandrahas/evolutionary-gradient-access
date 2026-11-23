@@ -55,6 +55,8 @@ class Config:
             raise ValueError("catalytic_gain and mismatch_scale must be positive")
         if self.reproduction_cost <= 0 or self.maintenance_cost < 0:
             raise ValueError("reproduction cost must be positive and maintenance non-negative")
+        if self.mutation_energy_cost < 0 or self.adaptive_budget < 0 or self.turnover_rate < 0:
+            raise ValueError("mutation/search costs and turnover rate must be non-negative")
         if self.fuel_feed <= 0 or self.fuel_feed > 1 or self.fuel_outflow < 0 or self.delta_mu <= 0 or self.k0 <= 0:
             raise ValueError("fuel_feed must be in (0,1], affinity/rate positive, outflow non-negative")
         if not 0 <= self.energy_storage_efficiency < 1:
