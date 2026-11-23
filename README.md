@@ -1,3 +1,5 @@
+> **This repository has moved.** Since 2026-11-23 it lives in [agency-from-gradients/gradient-access](https://github.com/praveenchandrahas/agency-from-gradients/tree/main/gradient-access), as S16, S15's equal-investment successor, with its full history. New work happens there. The single hypothesis register is [Hypotheses and falsifiers](https://praveenchandrahas.github.io/agency-from-gradients/docs/hypotheses/). This repository is kept read-only as a record.
+
 # Evolutionary Gradient Access
 
 Computational experiments investigating whether heritable variation and natural selection enable evolving systems to access and sustain dissipative pathways that passive and non-evolving structures cannot exploit at comparable energetic and material costs.
