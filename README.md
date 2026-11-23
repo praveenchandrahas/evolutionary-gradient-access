@@ -33,10 +33,10 @@ Install and run:
 ```bash
 python -m pip install -e ".[dev]"
 pytest -q
-ega-run --out results/initial --seeds 20 --steps 1200
+ega-run --out results/matched-key16 --seeds 10 --steps 300
 ```
 
-The runner executes E01 (static locks), E03 (drifting locks) and E04 (multiple locks), using 16-bit keys. It includes matched-size Mmatched, Amatched and Umatched controls, with each fixed control matched to the paired L run's late-window population. A is an oracle-assisted adaptive-search control. Cumulative dissipation is reported from the same trajectories.
+The current runner executes E01 (static locks), E03 (drifting locks) and E04 (multiple locks), using 16-bit keys. It includes matched-size Mmatched, Amatched and Umatched controls, with each fixed control matched to the paired L run's late-window population. A is an oracle-assisted adaptive-search control. Cumulative dissipation is reported from the same trajectories.
 
 ## Interpretation limits
 
