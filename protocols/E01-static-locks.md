@@ -4,7 +4,7 @@
 Does heritable variation and selection sustain access to a static, kinetically locked reaction pathway better than passive, fixed-catalyst and non-evolving dissipative controls?
 
 ## Arms
-N, M, D, L, U and A. D and L use paired seeds and identical initial key libraries. U is an idealized designer ceiling. A is a bounded non-replicating adaptive-search comparator.
+N, M, D, L, U, A, plus Mmatched, Amatched and Umatched. D and L use paired seeds and identical initial key libraries. U is an idealized designer ceiling. A is a bounded non-replicating adaptive-search comparator.
 
 ## Factors
 Barrier B = 0, 4, 8, 12 kT; smooth key landscape in the initial run. The key length, catalytic gain, mismatch scale, population cap, mutation rate and energetic costs require sensitivity analysis.
