@@ -6,6 +6,7 @@ import argparse
 import csv
 import itertools
 import json
+import math
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -14,11 +15,22 @@ from ega.model_v02 import ConfigV02, simulate_v02
 
 
 def catalyst_free_energy(concentrations, mu_catalyst_std):
-    import math
     return sum(
         c * (mu_catalyst_std + math.log(c) - 1.0)
         for c in concentrations if c > 0
     )
+
+
+def work_pool_exergy(atp, cfg):
+    """Available T/D chemical exergy relative to its equilibrium composition."""
+    def g(t):
+        d = 1.0 - t
+        return (
+            t * (cfg.mu_atp_std + math.log(t) - 1.0)
+            + d * (cfg.mu_adp_std + math.log(d) - 1.0)
+        )
+    equilibrium_atp = 1.0 / (1.0 + math.exp(cfg.mu3))
+    return g(atp) - g(equilibrium_atp)
 
 
 def run_one(arm, cfg, schedule, metadata, matched_total):
@@ -27,8 +39,10 @@ def run_one(arm, cfg, schedule, metadata, matched_total):
     initial_c = tuple(cfg.initial_concentrations)
     initial_material = sum(initial_c)
     initial_c_g = catalyst_free_energy(initial_c, cfg.mu_catalyst_std)
+    initial_work_exergy = work_pool_exergy(result["initial_state"][1], cfg)
     declared_work = (
-        initial_c_g + result["cumulative_work_replication"]
+        initial_c_g + initial_work_exergy
+        + result["cumulative_work_replication"]
         + result["cumulative_work_maintenance"]
     )
     material_investment = initial_material + result["cumulative_replication_net_extent"]
@@ -46,9 +60,14 @@ def run_one(arm, cfg, schedule, metadata, matched_total):
         "cumulative_replication_net_extent": result["cumulative_replication_net_extent"],
         "cumulative_work_generation": result["cumulative_work_generation"],
         "cumulative_work_replication": result["cumulative_work_replication"],
+        "cumulative_work_replication_forward": result["cumulative_work_replication_forward"],
+        "cumulative_work_replication_reverse": result["cumulative_work_replication_reverse"],
         "cumulative_work_maintenance": result["cumulative_work_maintenance"],
+        "cumulative_work_maintenance_forward": result["cumulative_work_maintenance_forward"],
+        "cumulative_work_maintenance_reverse": result["cumulative_work_maintenance_reverse"],
         "cumulative_entropy_production": result["cumulative_entropy_production"],
         "initial_catalyst_free_energy": initial_c_g,
+        "initial_work_pool_exergy": initial_work_exergy,
         "declared_work_investment": declared_work,
         "material_investment": material_investment,
         "fuel_extent_per_work": (
