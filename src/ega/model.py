@@ -13,7 +13,7 @@ from typing import Any
 
 import numpy as np
 
-ARMS = ("N", "M", "D", "L", "U", "A", "Mmatched", "Amatched", "Umatched")
+ARMS = ("N", "M", "D", "L", "U", "A", "Mmatched", "Dmatched", "Amatched", "Umatched")
 
 
 @dataclass(frozen=True)
@@ -140,7 +140,7 @@ def simulate(arm: str, cfg: Config, fixed_population_size: int | None = None) ->
     cfg.validate()
     if arm not in ARMS:
         raise ValueError(f"arm must be one of {ARMS}")
-    matched_arms = ("Mmatched", "Amatched", "Umatched")
+    matched_arms = ("Mmatched", "Dmatched", "Amatched", "Umatched")
     if arm in matched_arms and (fixed_population_size is None or fixed_population_size < 1
                                 or fixed_population_size > cfg.max_catalysts):
         raise ValueError(f"{arm} requires fixed_population_size in [1, max_catalysts]")
@@ -209,7 +209,7 @@ def simulate(arm: str, cfg: Config, fixed_population_size: int | None = None) ->
         available = max((released_energy * (1.0 - cfg.energy_storage_efficiency)
                          - cfg.maintenance_cost * len(population)) * dt, 0.0)
 
-        if arm in ("D", "L") and len(population):
+        if arm in ("D", "L", "Dmatched") and len(population):
             # Reproduction is driven by usable chemical free energy, not entropy.
             expected_mutation_cost = (cfg.key_bits * cfg.mutation_rate *
                                       cfg.mutation_energy_cost) if arm == "L" else 0.0
@@ -255,7 +255,7 @@ def simulate(arm: str, cfg: Config, fixed_population_size: int | None = None) ->
                     population[worst] = candidate[0]
                     current_score[worst] = cand_score
         # M and U are fixed; D inherits without mutation; L inherits with mutation.
-        if arm in ("N", "D", "L") and len(population) == 0 and extinct_at is None:
+        if arm in ("D", "L", "Dmatched") and len(population) == 0 and extinct_at is None:
             extinct_at = step
 
         mean_distance = (float(np.mean(np.min(
