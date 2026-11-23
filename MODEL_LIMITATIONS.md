@@ -40,3 +40,5 @@ The long-horizon implementation integrates 100 residence-time units. Environment
 ## Audit update — 2026-11-23
 
 A follow-up implementation audit identified three blocking defects in v0.1: reproduction expenditure is omitted from the reported investment total; the reproductive energy proxy uses the constant standard-affinity parameter rather than the state-dependent reaction affinity and is not linked to an explicit work-coupling reaction; and the ideal-mixture exchange entropy omits the complementary waste species. In addition, Dmatched is matched only at initialization and can subsequently grow. These findings supersede any interpretation of v0.1 as an equal-total-investment or complete-entropy test. See [VALIDATION_AUDIT.md](VALIDATION_AUDIT.md).
+
+A further audit of the published trajectories found that 80% of D/L runs reach at least 400 of the 500 allowed catalysts after the first step; after the second step all D runs and 80% of L runs are at or above 400. This indicates that the configured costs do not impose a meaningful resource-limited growth regime over most of the grid. See [VALIDATION_AUDIT.md](VALIDATION_AUDIT.md).
