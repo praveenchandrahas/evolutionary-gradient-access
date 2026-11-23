@@ -12,7 +12,7 @@ At zero barrier, catalytic arms have no material advantage over the passive base
 
 ## H2 — Evolutionary access
 
-At sufficiently high barriers, L sustains greater late-window pathway throughput and accessible free-energy release than fixed random catalysts matched to L's late-window abundance (Mmatched), and than the faithful non-mutating dissipative population D. Amatched tests generic adaptive search at the same catalyst abundance.
+At sufficiently high barriers, L sustains greater late-window pathway throughput and accessible free-energy release than fixed random catalysts matched to L's late-window abundance (Mmatched), and than the faithful-copying, no-new-mutation control D. Amatched tests generic adaptive search at the same catalyst abundance.
 
 **Falsifier:** paired intervals for L−Mmatched or L−D include zero or favour the non-evolving arm across the preregistered cold regime.
 
@@ -22,7 +22,7 @@ Compare L with oracle-assisted, bounded adaptive search A and its matched-size v
 
 ## H4 — Environmental drift
 
-There is a range of drift rates at which L retains access better than fixed M and faithful D. At sufficiently rapid drift, adaptation may fail.
+There is a range of drift rates at which L retains access better than fixed M and faithful-copying D. At sufficiently rapid drift, adaptation may fail.
 
 **Falsifier:** no robust region of differential persistence across plausible parameter sensitivity ranges.
 
