@@ -34,4 +34,4 @@ Consequently, `sigma_total` in v0.1 means the sum of the two implemented terms, 
 - Sweep smooth, rugged and epistatic landscapes, and multiple population caps.
 - Freeze the parameter ranges, primary outcomes and falsifiers before confirmatory runs.
 
-A passing unit-test suite is not a substitute for these scientific validation gates.
+The long-horizon implementation integrates 100 residence-time units, but the integration scheme remains explicit Euler and the horizon is not evidence of asymptotic stationarity. A passing unit-test suite is not a substitute for these scientific validation gates.
