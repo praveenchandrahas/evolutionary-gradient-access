@@ -149,6 +149,7 @@ def simulate(arm: str, cfg: Config, fixed_population_size: int | None = None) ->
     initial_count = fixed_population_size if arm in matched_arms else cfg.initial_catalysts
     rng = np.random.default_rng(cfg.seed)
     target_rng = np.random.default_rng(cfg.seed + 900_001)
+    drift_rng = np.random.default_rng(cfg.seed + 700_003)
     targets = _targets(target_rng, cfg.locks, cfg.key_bits)
     keys = rng.integers(0, 2, size=(initial_count, cfg.key_bits), dtype=np.int8)
     if arm in ("U", "Umatched"):
@@ -175,15 +176,17 @@ def simulate(arm: str, cfg: Config, fixed_population_size: int | None = None) ->
     extinct_at: int | None = None
     rows: list[dict[str, float]] = []
     target_changes = 0
+    drift_events: list[tuple[int, int, int]] = []
 
     for step in range(cfg.steps):
         dt = cfg.duration / cfg.steps
         drift_probability = 1.0 - math.exp(-cfg.drift_rate * dt)
-        if cfg.drift_rate and step > 0 and rng.random() < drift_probability:
-            lock = int(rng.integers(0, cfg.locks))
-            bit = int(rng.integers(0, cfg.key_bits))
+        if cfg.drift_rate and step > 0 and drift_rng.random() < drift_probability:
+            lock = int(drift_rng.integers(0, cfg.locks))
+            bit = int(drift_rng.integers(0, cfg.key_bits))
             targets[lock, bit] = 1 - targets[lock, bit]
             target_changes += 1
+            drift_events.append((step, lock, bit))
 
         fuel_before = fuel
         fuel, fluxes, sigma_rxn, sigma_mix = _reaction_step(
@@ -288,6 +291,7 @@ def simulate(arm: str, cfg: Config, fixed_population_size: int | None = None) ->
         "cumulative_adaptive_cost": cumulative_adaptive_cost,
         "cumulative_mutation_energy": cumulative_mutation_energy,
         "extinct_at": extinct_at, "target_changes": target_changes,
+        "drift_events": drift_events,
         "late_key_distance": float(np.mean([r["mean_key_distance"] for r in tail])),
         "trajectory": rows,
     }
