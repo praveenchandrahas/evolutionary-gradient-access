@@ -15,7 +15,7 @@ def test_zero_barrier_removes_catalytic_advantage():
 
 
 def test_matched_controls_use_requested_fixed_population():
-    cfg = Config(steps=10, seed=5)
+    cfg = Config(steps=10, duration=1.0, seed=5)
     result = simulate("Mmatched", cfg, fixed_population_size=137)
     assert result["initial_population"] == 137
     assert result["final_population"] == 137
@@ -26,6 +26,11 @@ def test_matched_controls_use_requested_fixed_population():
 def test_default_key_length_and_horizon():
     assert Config().key_bits == 16
     assert Config().duration == 100.0
+
+
+def test_drift_hazard_produces_changes_over_long_horizon():
+    result = simulate("N", Config(drift_rate=0.05, steps=300, duration=100.0, seed=1))
+    assert result["target_changes"] > 0
 
 
 def test_catalysts_do_not_change_equilibrium_composition():
