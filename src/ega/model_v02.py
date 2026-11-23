@@ -19,7 +19,7 @@ import math
 from typing import Any, Sequence
 
 import numpy as np
-from scipy.integrate import solve_ivp
+from scipy.integrate import simpson, solve_ivp
 
 
 @dataclass(frozen=True)
@@ -434,7 +434,7 @@ def simulate_v02(
 
     def integral(key: str) -> float:
         values = np.asarray([d[key] for d in diagnostics_rows], dtype=float)
-        return float(np.sum(0.5 * (values[:-1] + values[1:]) * np.diff(times)))
+        return float(simpson(values, x=times))
 
     late_start = int(0.8 * len(trajectory))
     late = trajectory[late_start:]
