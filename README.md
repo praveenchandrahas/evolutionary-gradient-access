@@ -14,7 +14,7 @@ The subject is **evolutionary advantage**, not a unique property of life.
 
 - **N:** uncatalysed passive baseline.
 - **M:** fixed random catalyst library.
-- **D:** self-maintaining catalytic population with faithful inheritance and no mutation.
+- **D:** self-maintaining catalytic population with faithful inheritance and no new mutation; selection can sort standing variation.
 - **L:** heritable variation and selection.
 - **U:** ideal designer benchmark with target-matched catalysts.
 - **A:** bounded, oracle-assisted non-replicating adaptive search control.
