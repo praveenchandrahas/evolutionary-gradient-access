@@ -9,6 +9,8 @@ def test_zero_barrier_removes_catalytic_advantage():
     cfg = Config(barriers=(0.0,), steps=100, seed=7)
     values = [simulate(arm, cfg)["mean_throughput_late"]
               for arm in ("N", "M", "D", "L", "U", "A")]
+    values.extend(simulate(arm, cfg, fixed_population_size=100)["mean_throughput_late"]
+                  for arm in ("Mmatched", "Amatched", "Umatched"))
     assert max(values) - min(values) < 1e-10
 
 
