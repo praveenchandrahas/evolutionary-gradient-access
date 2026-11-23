@@ -1,3 +1,5 @@
+> **Validation status (2026-11-23):** A subsequent code audit found that reproduction expenditure is not accumulated in the investment ledger, the reproductive energy proxy is not the actual reaction free-energy release and is not coupled through an explicit work-producing reaction, and the fuel-exchange entropy omits the complementary waste species. Dmatched is also only initial-abundance-matched, not population-trajectory-matched. Therefore the throughput outputs remain exploratory model results, but the energetic-cost and complete-entropy interpretations are not validated. See [VALIDATION_AUDIT.md](../VALIDATION_AUDIT.md). Do not cite this report as evidence of an advantage at comparable total energetic investment until a corrected model passes the validation gates.
+
 # Exploratory findings — long-horizon 16-bit run
 
 **Run:** GitHub Actions run 45132922728  
