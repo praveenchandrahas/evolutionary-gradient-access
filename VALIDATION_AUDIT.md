@@ -42,12 +42,20 @@ Mmatched and Amatched are fixed-size populations initialized to L's rounded late
 
 The implementation omits a complete stoichiometric ledger for all chemical species, work currency, catalyst synthesis, mutation, replication, turnover, pumping, mixing apparatus, heat transfer and reservoir regeneration. The current `sigma_total` is a partial diagnostic, not the entropy production of a closed, fully declared physical boundary.
 
+
+### V6 — The reproductive energy constraint is not binding in the reported runs
+
+The published trajectory artifact shows that D and L populations reach the 500-catalyst cap extremely quickly. Across the 200 D/L trajectories, 80% are already at or above 400 catalysts after the first integration step; 100% are at or above 400 after the second step for D, and 80% for L. At barriers 0, 4 and 8 kT, all D/L runs are already at or above 400 after the first step. At 12 kT, the mean first-step populations are approximately 268 for D and 254 for L, and all D runs and 80% of L runs are at or above 400 after the second step.
+
+This rapid saturation means the configured reproduction/maintenance costs do not create a meaningful resource-limited evolutionary regime over most of the tested grid. It also means the late-window comparison is primarily a competition among near-capacity populations, not an experiment demonstrating persistence under a tight energy budget. The result is consistent with the cost-scale mismatch already identified in V1/V2 and strengthens the requirement for explicit work coupling and cost calibration.
+
 ## Consequences for the existing findings
 
 - The raw throughput trajectories remain outputs of the specified abstract kinetic model.
 - The paired-seed design and shared drift histories remain useful implementation properties.
 - The zero-barrier invariance remains a valid code-level invariant for the current rate construction.
 - The previous total-investment metric and any claim of energetic-cost matching are not valid because reproduction expenditure is missing.
+- Most D/L trajectories reach the 500-catalyst cap within one or two integration steps, showing that the configured energy costs do not impose a meaningful resource-limited growth regime.
 - The current entropy totals are partial and should not be presented as complete reactor entropy production.
 - The L-versus-Dmatched result is an initial-abundance comparison with a replicating control, not a matched population-trajectory comparison.
 - None of these simulations establishes an empirical thermodynamic law or a physical mechanism for the origin of replicators.
