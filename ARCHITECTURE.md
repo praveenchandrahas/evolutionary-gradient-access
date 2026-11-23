@@ -16,7 +16,7 @@ Simulation duration is declared in residence-time units and integration uses dt 
 
 ## Experimental arms
 
-N, M, D, L, U and A are defined in the README. Mmatched, Amatched and Umatched are fixed controls whose catalyst count is set to the paired L run's rounded late-window mean. D and L begin from identical random genotype libraries under paired seeds. D has no new mutation but can select among standing variation.
+N, M, D, L, U and A are defined in the README. Mmatched, Dmatched, Amatched and Umatched are controls initialized at the paired L run's rounded late-window mean. Dmatched reproduces faithfully without new mutation; the others are fixed populations or bounded search. D and L begin from identical random genotype libraries under paired seeds. D has no new mutation but can select among standing variation.
 
 ## Core invariants
 
