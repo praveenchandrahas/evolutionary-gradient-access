@@ -196,11 +196,11 @@ def evaluate_state(
 
     # Local-detailed-balance affinities from the same standard potentials.
     affinity1 = cfg.mu1 + math.log(f * adp / (waste * atp))
-    affinity2 = cfg.mu2 + (
+    affinity2 = (cfg.mu2 + (
         cfg.monomers_per_catalyst * math.log(monomer / polymer)
         + cfg.atp_per_birth * math.log(atp / adp)
-        - np.log(c)
-    )
+        - np.log(np.maximum(c, 1e-300))
+    )) if replication else np.zeros(n, dtype=float)
     affinity3 = cfg.mu3 + math.log(atp / adp)
 
     sigma1 = j1 * affinity1
@@ -291,7 +291,7 @@ def free_energy_balance(state: Sequence[float], cfg: ConfigV02, target: int,
     mu_p = cfg.mu_polymer_std + math.log(polymer)
     gradient = np.asarray(
         [mu_f - mu_w, mu_t - mu_d, mu_m - mu_p]
-        + [cfg.mu_catalyst_std + math.log(x) for x in c],
+        + [cfg.mu_catalyst_std + math.log(x) if x > 0 else 0.0 for x in c],
         dtype=float,
     )
     dG_dt = float(np.dot(gradient, dy))
@@ -410,7 +410,7 @@ def simulate_v02(
 
     def integral(key: str) -> float:
         values = np.asarray([d[key] for d in diagnostics_rows], dtype=float)
-        return float(np.trapezoid(values, times))
+        return float(np.sum(0.5 * (values[:-1] + values[1:]) * np.diff(times)))
 
     late_start = int(0.8 * len(trajectory))
     late = trajectory[late_start:]
@@ -419,7 +419,7 @@ def simulate_v02(
         "arm": arm,
         "config": asdict(cfg),
         "target_schedule": [(float(t), int(x)) for t, x in schedule],
-        "initial_state": initial.tolist() if False else states[:, 0].tolist(),
+        "initial_state": states[:, 0].tolist(),
         "final_state": states[:, -1].tolist(),
         "initial_catalyst_concentration": float(states[3:, 0].sum()),
         "final_catalyst_concentration": float(states[3:, -1].sum()),
@@ -431,6 +431,10 @@ def simulate_v02(
         "cumulative_replication_reverse_extent": integral("j2_reverse"),
         "cumulative_maintenance_extent": integral("j3_maintenance"),
         "cumulative_entropy_production": cumulative_sigma,
+        "cumulative_fuel_free_energy": integral("fuel_free_energy_rate"),
+        "cumulative_work_generation": integral("work_generation_rate"),
+        "cumulative_work_replication": integral("work_replication_rate"),
+        "cumulative_work_maintenance": integral("work_maintenance_rate"),
         "max_free_energy_balance_residual": max_balance_residual,
         "initial_free_energy": free_energy_density(states[:, 0], cfg),
         "final_free_energy": free_energy_density(states[:, -1], cfg),
