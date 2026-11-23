@@ -180,18 +180,19 @@ def main():
                 if r["environment"] == environment
                 and r["mutation_rate"] == 0.10
                 and r["replication_coupling"] == 1.0
-                and r["rare_genotype_initial_concentration"] == 1e-6
+                and r["barrier_kT"] == 8.0
             ]
-            subset.sort(key=lambda r: r["barrier_kT"])
+            subset.sort(key=lambda r: r["rare_genotype_initial_concentration"])
             if subset:
                 ax.plot(
-                    [r["barrier_kT"] for r in subset],
+                    [r["rare_genotype_initial_concentration"] for r in subset],
                     [r[f"L_over_{comparator}_late_throughput"] for r in subset],
                     marker="o", label=comparator,
                 )
+        ax.set_xscale("log")
         ax.axhline(1.0, linewidth=1)
         ax.set_title(environment.capitalize())
-        ax.set_xlabel("Activation barrier (kT)")
+        ax.set_xlabel("Initial target-genotype concentration")
     axes[0].set_ylabel("L / comparator late throughput")
     axes[1].legend()
     fig.tight_layout()
