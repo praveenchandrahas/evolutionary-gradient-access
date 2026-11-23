@@ -152,6 +152,7 @@ def simulate(arm: str, cfg: Config, fixed_population_size: int | None = None) ->
     else:
         population = keys.copy()
 
+    initial_population_actual = len(population)
     barriers = np.resize(np.asarray(cfg.barriers, dtype=float), cfg.locks)
     fuel = float(cfg.fuel_feed)
     cumulative_sigma = cumulative_reaction = cumulative_exchange = 0.0
@@ -261,7 +262,7 @@ def simulate(arm: str, cfg: Config, fixed_population_size: int | None = None) ->
     mean_access = float(np.mean([r["throughput"] for r in tail]))
     return {
         "arm": arm, "seed": cfg.seed, "config": asdict(cfg),
-        "targets": targets.tolist(), "initial_population": int(initial_count),
+        "targets": targets.tolist(), "initial_population": int(initial_population_actual),
         "final_population": int(len(population)),
         "mean_population_late": mean_pop, "mean_sigma_late": mean_sigma,
         "mean_throughput_late": mean_access,
