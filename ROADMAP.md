@@ -13,7 +13,7 @@
 
 ## Next: scientific validation (blocking; v0.1 findings are provisional)
 
-The v0.1 audit found omitted reproduction expenditure, an uncoupled reproductive energy proxy, incomplete binary-mixture exchange entropy and a control-matching ambiguity. The prior energetic-cost comparison is invalid until these are corrected. See [VALIDATION_AUDIT.md](VALIDATION_AUDIT.md).
+The v0.1 audit found omitted reproduction expenditure, an uncoupled reproductive energy proxy, incomplete binary-mixture exchange entropy and a control-matching ambiguity. The prior energetic-cost comparison is invalid until these are corrected. See [VALIDATION_AUDIT.md](VALIDATION_AUDIT.md) and the proposed [MODEL_V02_DESIGN.md](MODEL_V02_DESIGN.md).
 
 
 
