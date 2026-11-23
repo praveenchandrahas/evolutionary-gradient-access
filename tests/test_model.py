@@ -56,10 +56,12 @@ def test_entropy_production_is_nonnegative():
 
 
 def test_d_and_l_share_initial_targets_and_seed():
-    cfg = Config(steps=2, seed=19)
+    cfg = Config(steps=300, duration=100.0, drift_rate=0.05, seed=19)
     d = simulate("D", cfg)
     l = simulate("L", cfg)
     assert d["targets"] == l["targets"]
+    assert d["drift_events"] == l["drift_events"]
+    assert d["target_changes"] == l["target_changes"]
     assert d["config"]["seed"] == l["config"]["seed"]
 
 
