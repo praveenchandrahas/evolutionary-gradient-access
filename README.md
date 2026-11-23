@@ -18,6 +18,9 @@ The subject is **evolutionary advantage**, not a unique property of life.
 - **L:** heritable variation and selection.
 - **U:** ideal designer benchmark with target-matched catalysts.
 - **A:** bounded, oracle-assisted non-replicating adaptive search control.
+- **Mmatched:** fixed random catalyst library matched to L's late-window population size.
+- **Amatched:** adaptive-search control matched to L's late-window population size.
+- **Umatched:** ideal target-matched catalyst population at L's late-window population size.
 
 D and L begin from the same random key library under paired seeds. Catalysts multiply forward and reverse reaction rates equally; they do not change the equilibrium constant. Selection uses usable chemical free energy after declared costs. Entropy production is recorded independently and is never included in fitness.
 
@@ -33,7 +36,7 @@ pytest -q
 ega-run --out results/initial --seeds 20 --steps 1200
 ```
 
-The runner executes E01 (static locks), E03 (drifting locks) and E04 (multiple locks). E02 adaptive search is included as arm A. Cumulative dissipation is reported from the same trajectories.
+The runner executes E01 (static locks), E03 (drifting locks) and E04 (multiple locks), using 16-bit keys. It includes matched-size Mmatched, Amatched and Umatched controls, with each fixed control matched to the paired L run's late-window population. A is an oracle-assisted adaptive-search control. Cumulative dissipation is reported from the same trajectories.
 
 ## Interpretation limits
 
