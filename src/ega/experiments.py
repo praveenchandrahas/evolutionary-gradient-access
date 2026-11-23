@@ -43,7 +43,7 @@ def run_suite(out: Path, seeds: int = 10, steps: int = 300,
                     results = {"L": l_result}
                     for arm in ("N", "M", "D", "U", "A"):
                         results[arm] = simulate(arm, cfg)
-                    for arm in ("Mmatched", "Amatched", "Umatched"):
+                    for arm in ("Mmatched", "Dmatched", "Amatched", "Umatched"):
                         results[arm] = simulate(arm, cfg, fixed_population_size=matched_count)
 
                     for arm in ARMS:
@@ -102,7 +102,7 @@ def run_suite(out: Path, seeds: int = 10, steps: int = 300,
     by_key = {(r["design"], r["barrier_kT"], r["seed"], r["arm"]): r for r in records}
     summary: dict = {}
     contrasts: dict = {}
-    comparators = ("M", "Mmatched", "D", "A", "Amatched", "U", "Umatched", "N")
+    comparators = ("M", "Mmatched", "D", "Dmatched", "A", "Amatched", "U", "Umatched", "N")
     for design in designs:
         summary[design] = {}
         contrasts[design] = {}
@@ -134,7 +134,7 @@ def run_suite(out: Path, seeds: int = 10, steps: int = 300,
         "key_bits": 16, "arms": list(ARMS), "designs": designs,
         "barriers_kT": [0, 4, 8, 12],
         "matched_controls": "Mmatched, Amatched and Umatched use the rounded late-window L population for each paired seed",
-        "primary_exploratory_contrasts": ["L_minus_Mmatched", "L_minus_D", "L_minus_Amatched"],
+        "primary_exploratory_contrasts": ["L_minus_Mmatched", "L_minus_D", "L_minus_Dmatched", "L_minus_Amatched"],
         "uncertainty": "paired-seed bootstrap percentile intervals; exploratory only",
         "warning": "Exploratory model output; not preregistered or empirical evidence."
     }
