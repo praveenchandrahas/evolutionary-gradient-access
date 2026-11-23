@@ -348,8 +348,8 @@ def simulate_v02(
 ) -> dict[str, Any]:
     """Run N, M, D or L over a piecewise-constant target schedule."""
     cfg.validate()
-    if arm not in ("N", "M", "Mmatched", "D", "Dmatched", "L"):
-        raise ValueError("v0.2 supports arms N, M, Mmatched, D, Dmatched and L")
+    if arm not in ("N", "M", "Mmatched", "Moracle", "D", "Dmatched", "L"):
+        raise ValueError("v0.2 supports arms N, M, Mmatched, Moracle, D, Dmatched and L")
     n = cfg.genotype_count
     c0 = np.asarray(cfg.initial_concentrations, dtype=float)
     if arm == "N":
