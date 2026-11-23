@@ -55,7 +55,7 @@ This rapid approach to capacity indicates that the configured reproduction/maint
 - The paired-seed design and shared drift histories remain useful implementation properties.
 - The zero-barrier invariance remains a valid code-level invariant for the current rate construction.
 - The previous total-investment metric and any claim of energetic-cost matching are not valid because reproduction expenditure is missing.
-- Most D/L trajectories reach the 500-catalyst cap within one or two integration steps, showing that the configured energy costs do not impose a meaningful resource-limited growth regime.
+- Most D/L trajectories approach the cap rapidly: 80% are at or above 400 after the first step and all are at or above 400 after the second; all eventually touch 500. This indicates no sustained resource-limited growth regime over most of the tested grid.
 - The current entropy totals are partial and should not be presented as complete reactor entropy production.
 - The L-versus-Dmatched result is an initial-abundance comparison with a replicating control, not a matched population-trajectory comparison.
 - None of these simulations establishes an empirical thermodynamic law or a physical mechanism for the origin of replicators.
