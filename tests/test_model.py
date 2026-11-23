@@ -12,6 +12,19 @@ def test_zero_barrier_removes_catalytic_advantage():
     assert max(values) - min(values) < 1e-10
 
 
+def test_matched_controls_use_requested_fixed_population():
+    cfg = Config(steps=10, seed=5)
+    result = simulate("Mmatched", cfg, fixed_population_size=137)
+    assert result["initial_population"] == 137
+    assert result["final_population"] == 137
+    with pytest.raises(ValueError):
+        simulate("Mmatched", cfg)
+
+
+def test_default_key_length_is_large_enough_for_nontrivial_search():
+    assert Config().key_bits == 16
+
+
 def test_catalysts_do_not_change_equilibrium_composition():
     cfg = Config(barriers=(8.0,), steps=10, seed=4)
     fuel_eq = 1.0 / (1.0 + np.exp(cfg.delta_mu))
