@@ -58,6 +58,7 @@ def run_suite(out: Path, seeds: int = 10, steps: int = 300,
                         raw.write(json.dumps({
                             "design": design, "barrier_kT": barrier, "seed": seed,
                             "arm": arm, "matched_count": matched_count,
+                            "drift_events": result["drift_events"],
                             "trajectory": result["trajectory"]
                         }, separators=(",", ":")) + "\n")
                         records.append({
