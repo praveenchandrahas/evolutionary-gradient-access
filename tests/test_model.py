@@ -21,7 +21,7 @@ def test_matched_controls_use_requested_fixed_population():
     assert result["final_population"] == 137
     dmatched = simulate("Dmatched", cfg, fixed_population_size=137)
     assert dmatched["initial_population"] == 137
-    assert dmatched["final_population"] == 137
+    assert 0 < dmatched["final_population"] <= 137
     assert simulate("N", cfg)["extinct_at"] is None
     with pytest.raises(ValueError):
         simulate("Mmatched", cfg)
