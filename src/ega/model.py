@@ -135,8 +135,9 @@ def simulate(arm: str, cfg: Config, fixed_population_size: int | None = None) ->
     if arm not in ARMS:
         raise ValueError(f"arm must be one of {ARMS}")
     matched_arms = ("Mmatched", "Amatched", "Umatched")
-    if arm in matched_arms and (fixed_population_size is None or fixed_population_size < 1):
-        raise ValueError(f"{arm} requires a positive fixed_population_size")
+    if arm in matched_arms and (fixed_population_size is None or fixed_population_size < 1
+                                or fixed_population_size > cfg.max_catalysts):
+        raise ValueError(f"{arm} requires fixed_population_size in [1, max_catalysts]")
     if arm not in matched_arms and fixed_population_size is not None:
         raise ValueError("fixed_population_size is only valid for matched control arms")
     initial_count = fixed_population_size if arm in matched_arms else cfg.initial_catalysts
