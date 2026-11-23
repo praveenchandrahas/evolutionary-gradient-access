@@ -376,6 +376,7 @@ def simulate_v02(
     time_parts: list[np.ndarray] = []
     state_parts: list[np.ndarray] = []
     target_parts: list[np.ndarray] = []
+    segment_solutions: list[tuple[np.ndarray, np.ndarray, int]] = []
     for idx, (start, target) in enumerate(schedule):
         stop = schedule[idx + 1][0] if idx + 1 < len(schedule) else cfg.duration
         points = max(2, int(round(cfg.steps * (stop - start) / cfg.duration)) + 1)
@@ -388,6 +389,7 @@ def simulate_v02(
         )
         if not sol.success:
             raise RuntimeError(f"v0.2 integration failed: {sol.message}")
+        segment_solutions.append((sol.t.copy(), sol.y.copy(), int(target)))
         if np.any(sol.y[:3] <= 0) or np.any(sol.y[:3] >= 1):
             raise RuntimeError("integration left the positive activity domain; reduce the timestep")
         if np.any(sol.y[3:] < -1e-10):
@@ -433,8 +435,18 @@ def simulate_v02(
         diagnostics_rows.append(diag)
 
     def integral(key: str) -> float:
-        values = np.asarray([d[key] for d in diagnostics_rows], dtype=float)
-        return float(simpson(values, x=times))
+        # Integrate each constant-target segment separately. Rates can jump at
+        # a target switch even though the chemical state remains continuous.
+        total = 0.0
+        for segment_times, segment_states, segment_target in segment_solutions:
+            values = []
+            for k in range(len(segment_times)):
+                _, segment_diag = evaluate_state(
+                    segment_states[:, k], cfg, segment_target, kernel, replication
+                )
+                values.append(segment_diag[key])
+            total += float(simpson(np.asarray(values, dtype=float), x=segment_times))
+        return total
 
     late_start = int(0.8 * len(trajectory))
     late = trajectory[late_start:]
