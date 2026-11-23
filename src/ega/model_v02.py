@@ -408,7 +408,6 @@ def simulate_v02(
     states = np.concatenate(state_parts, axis=1)
     targets = np.concatenate(target_parts)
     trajectory: list[dict[str, Any]] = []
-    diagnostics_rows: list[dict[str, float]] = []
     max_balance_residual = 0.0
     for k, t in enumerate(times):
         state = states[:, k]
@@ -432,7 +431,6 @@ def simulate_v02(
         for i, value in enumerate(state[3:]):
             row[f"catalyst_{i}"] = float(value)
         trajectory.append(row)
-        diagnostics_rows.append(diag)
 
     def integral(key: str) -> float:
         # Integrate each constant-target segment separately. Rates can jump at
