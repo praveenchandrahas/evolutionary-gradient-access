@@ -302,6 +302,22 @@ def work_pool_free_energy(state: Sequence[float], cfg: ConfigV02) -> float:
     )
 
 
+def work_pool_exergy(atp: float, cfg: ConfigV02) -> float:
+    """Available T/D chemical exergy above the pool's equilibrium state."""
+    if not 0.0 < atp < 1.0:
+        raise ValueError("ATP activity must lie strictly inside (0, 1)")
+
+    def g(t: float) -> float:
+        d = 1.0 - t
+        return (
+            t * (cfg.mu_atp_std + math.log(t) - 1.0)
+            + d * (cfg.mu_adp_std + math.log(d) - 1.0)
+        )
+
+    equilibrium_atp = 1.0 / (1.0 + math.exp(cfg.mu3))
+    return float(g(atp) - g(equilibrium_atp))
+
+
 def free_energy_balance(state: Sequence[float], cfg: ConfigV02, target: int,
                         kernel: np.ndarray, replication: bool = True) -> dict[str, float]:
     """Check external chemical free-energy input - dG/dt = total entropy production."""
