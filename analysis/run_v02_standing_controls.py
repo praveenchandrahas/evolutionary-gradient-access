@@ -11,7 +11,7 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 
-from ega.model_v02 import ConfigV02, simulate_v02
+from ega.model_v02 import ConfigV02, simulate_v02, work_pool_exergy
 
 
 def catalyst_free_energy(concentrations, mu_catalyst_std):
@@ -19,18 +19,6 @@ def catalyst_free_energy(concentrations, mu_catalyst_std):
         c * (mu_catalyst_std + math.log(c) - 1.0)
         for c in concentrations if c > 0
     )
-
-
-def work_pool_exergy(atp, cfg):
-    """Available T/D chemical exergy relative to its equilibrium composition."""
-    def g(t):
-        d = 1.0 - t
-        return (
-            t * (cfg.mu_atp_std + math.log(t) - 1.0)
-            + d * (cfg.mu_adp_std + math.log(d) - 1.0)
-        )
-    equilibrium_atp = 1.0 / (1.0 + math.exp(cfg.mu3))
-    return g(atp) - g(equilibrium_atp)
 
 
 def run_one(arm, cfg, schedule, metadata, matched_total):
