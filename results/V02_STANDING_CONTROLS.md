@@ -21,6 +21,8 @@ Five arms were compared:
 
 The matched libraries are front-loaded: they have the matched material available from time zero, whereas L accumulates it through replication. That is deliberate and is important when interpreting cumulative throughput.
 
+**Artifact wording correction:** the generated `summary.json` describes `Moracle` as an oracle upper bound. That label is too strong. It is a post-hoc composition-matched fixed library, not a strict upper bound, because it experiences the same target schedule and has a different work-pool trajectory. The underlying run data are unchanged.
+
 ## 2. Thermodynamic and numerical checks
 
 | Diagnostic | Result |
